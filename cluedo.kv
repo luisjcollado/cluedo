@@ -1,11 +1,97 @@
+#:import modo cluedoApp.ModoJuego
+
 <Inicial>:
-    orientation: "vertical"
+    MDBoxLayout:
 
-    Label:
-        text: "CLUEDO"
-        font_size: dp(80)
-        height: dp(120)
-        size_hint_y: None
+        orientation: "vertical"
+        adaptative_height: True
+        #md_bg_color: app.theme_cls.primary_color
 
-    Image:
-        source: "recursos/cluedoImagen.png"
+        MDLabel:
+            text: "CLUEDO"
+            font_style: "H1"
+            halign: "center"
+
+        Image:
+            source: "recursos/cluedoImagen.png"
+
+<Modo_Juego>:
+    MDBoxLayout:
+        orientation: "vertical"
+        size_hint_y: 1
+
+        MDTopAppBar:
+            elevation:5
+            title: "Modo de Juego"
+            font_size: 30
+            pos_hint: {"center_x":.5}        
+            adaptative_height: True
+            
+        MDBoxLayout:
+            orientation: "vertical"
+            pos_hint: {'center_y':0.5}
+            size_hint_y: 1
+            MDBoxLayout:
+                size_hint_y: .4
+            MDFillRoundFlatButton:
+                text: " Generar Juego"
+                pos_hint: {"center_x":.5}        
+                font_size: 50
+                on_release: app.modoJuego = modo.SERVIDOR
+            MDBoxLayout:
+                size_hint_y: .2
+            MDFillRoundFlatButton:
+                text: " Unirse a Juego"
+                pos_hint: {"center_x":.5}        
+                font_size: 50
+                on_release: app.modoJuego = modo.CLIENTE
+            MDBoxLayout:
+                size_hint_y: .4
+
+
+<Configurar_Servidor>:
+    MDBoxLayout:
+        orientation: "vertical"
+        size_hint_y: 1
+
+        MDTopAppBar:
+            elevation: 3
+            title: "Configurar Servidor"
+            pos_hint: {"center_x":.5}
+            adaptative_height: True
+
+        MDRelativeLayout:
+            MDTextField:
+                id: alias
+                hint_text: "Alias"
+                size_hint_x: .5
+                pos_hint:{'center_x': .5,'center_y': .8}
+                mode: "round"
+                max_text_length: 15
+                helper_text: "tu apodo para la partida"
+                on_text: root.on_text(self,self.text)
+                font_size: 20
+
+            MDRectangleFlatButton:
+                id: bt_iniciar
+                text: 'Iniciar Servidor'
+                pos_hint:{'center_x': .5,'center_y':.6}
+                font_size: 35
+                on_release: root.interruptor_servidor()
+                theme_text_color: 'Custom'
+                text_color: 'red'
+                line_color: 'red'
+
+            MDCard:
+                pos_hint:{'center_x': .5,'center_y': .3}
+                size_hint: 0.5, None
+                #size : ipServidor.texture_size
+                MDLabel:
+                    id: ipServidor
+                    text: "IP: " + root.ipServidor
+                    font_size: dp(30)
+                    halign: "center"
+
+            
+
+<Cliente_Conf>:
